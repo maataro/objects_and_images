@@ -2,14 +2,13 @@ let kittens = [];
 let bubbles = [];
 
 function preload() {
-	for(let i = 0; i < 4; i++) {
+	for(let i = 0; i < 6; i++) {
 		kittens[i] = loadImage(`kittens/choco${i}.png`);
 	}
-
 }
 
 function setup() {
-	createCanvas(600, 400);
+	createCanvas(800, 600);
 
 	for (let i = 0; i < 5; i++) {
 		let x = random(width);
@@ -29,6 +28,15 @@ function draw() {
 	}
 }
 
+function mouseClicked() {
+	for (let b of bubbles) {
+		if (b.clicked(mouseX, mouseY)) {
+			b.img = random(kittens);
+		}
+	}
+}
+
+
 class Bubble {
 	constructor(x, y, r, img) {
 		this.x = x;
@@ -43,22 +51,14 @@ class Bubble {
 	}
 
 	show() {
-		image(this.img, this.x, this.y, this.r, this.r);
+		image(this.img, this.x, this.y, this.r*2, this.r*2);
 	}
 
 	clicked(posX, posY) {
-		if(this.x < posX && this.x + this.r > posX &&
-		   this.y < posY && this.y + this.r > posY) {
-			    return true;
+		if(this.x < posX && this.x + this.r*2 > posX &&
+		   this.y < posY && this.y + this.r*2 > posY) {
+			   return true;
 		}
 		return false;
-		}
-}
-
-function mouseClicked() {
-	for (let b of bubbles) {
-		if (b.clicked(mouseX, mouseY)) {
-			b.img = random(kittens);
-		}
 	}
 }
